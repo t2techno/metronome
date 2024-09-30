@@ -15,7 +15,7 @@ export type KnobProps = iOptionalKnobProps & {
   max: number;
   min: number;
   step: number;
-  handleChange: (value: number) => void;
+  onChange: (value: number) => void;
 };
 
 const Knob: React.FC<KnobProps> = ({
@@ -23,7 +23,7 @@ const Knob: React.FC<KnobProps> = ({
   max,
   min,
   step,
-  handleChange,
+  onChange,
   className,
   label = "",
   centerZero = false,
@@ -41,7 +41,7 @@ const Knob: React.FC<KnobProps> = ({
         min={min ?? 0.0}
         step={step}
         onValueChange={(value: number[]) => {
-          handleChange(value[0]);
+          onChange(value[0]);
         }}
       >
         <KnobUi
@@ -52,7 +52,7 @@ const Knob: React.FC<KnobProps> = ({
         <Slider.Track>
           <Slider.Range />
         </Slider.Track>
-        <Slider.Thumb aria-label="Volume" />
+        <Slider.Thumb aria-label="" />
       </Slider.Root>
     </div>
   );

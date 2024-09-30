@@ -1,0 +1,14 @@
+App: Tabs: Metronome screen, song screen, edit screen
+Metronome Screen:
+  - similar to image in /public from behance
+  - large dial in center, minimal look, big number up top with +/-
+
+Song Screen:
+  - current measure / beat up top
+  - similar to drum machine/software
+  - different volume per beat
+  - set tempo/time signature for number of measures
+  - set custom time for fermata
+
+edit screen:
+  -tbd
