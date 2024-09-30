@@ -1,0 +1,16 @@
+.wrapper {
+  cursor: pointer;
+  border: 1px solid gray;
+  height: 150px;
+  border-radius: 16px;
+}
+
+.beat {
+  border: 2px solid black;
+  height: 150px;
+  border-radius: 16px;
+}
+
+.active {
+  background-color: orange;
+}

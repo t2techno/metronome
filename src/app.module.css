@@ -1,0 +1,26 @@
+.wrapper {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.timeSignature {
+  width: fit-content;
+}
+
+.row p {
+  font-size: 24px;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns:
+    repeat(auto-fill, minmax(150px, 1fr));
+}
