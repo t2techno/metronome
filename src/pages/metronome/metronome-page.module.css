@@ -4,13 +4,68 @@
   align-items: center;
   position: relative;
   border: solid 2px black;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 24px;
 }
 
 .tempoWrapper {
+  margin-top: 32px;
   display: flex;
-  gap: 12px;
+  gap: 32px;
   align-items: center;
 }
 
+.button {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  box-shadow: 2px 2px hsl(0 0% 0%);
+}
+
+.button:hover {
+  background-color: white;
+  border-color: orange;
+  transition: all 500ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .button:hover {
+    transition: 250ms;
+    transform: translateY(-4px);
+  }
+
+  .button:active {
+    transition: 50ms;
+    transform: translateY(2px);
+  }
+}
+
+.nudge {
+}
+
+.bpmLabel {
+  line-height: 1;
+  font-size: 2.5rem;
+}
+
+.tempo {
+  line-height: 1;
+  font-size: 4rem;
+  margin: 0;
+}
 .knob {
+  width: 50%;
+}
+
+/* optical align */
+.play {
+  margin-left: 6px;
+}
+
+.bottom.button {
+  margin-bottom: 32px;
 }
