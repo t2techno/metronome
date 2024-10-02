@@ -1,5 +1,5 @@
-import styles from "./knob.module.css";
-import KnobUi from "./KnobUi";
+import styles from "./arc-knob.module.css";
+import KnobUi from "./ArcKnobUi";
 import * as Slider from "@radix-ui/react-slider";
 
 export interface iOptionalKnobProps {
@@ -26,6 +26,7 @@ const Knob: React.FC<KnobProps> = ({
   onChange,
   className,
   label = "",
+  centerZero = false,
   controlDirection = "vertical",
   valueColor = "var(--primary-light)",
 }) => {
@@ -44,8 +45,9 @@ const Knob: React.FC<KnobProps> = ({
         }}
       >
         <KnobUi
+          centerZero={centerZero}
           value={value / max}
-          valueColor={"orange"}
+          valueColor={valueColor}
         />
         <Slider.Track>
           <Slider.Range />

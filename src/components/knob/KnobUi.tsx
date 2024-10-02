@@ -1,42 +1,76 @@
+import { useMemo } from "react";
 import styles from "./knob.module.css";
-import { volumeArc } from "./knob.utilities";
+import { arcLocation } from "./knob.utilities";
 
 interface iKnobUiProps {
   value: number;
   valueColor: string;
-  centerZero: boolean;
 }
 
-const KnobUi: React.FC<iKnobUiProps> = ({ value, valueColor, centerZero }) => {
-  const rotate = centerZero ? (value / 2) * 270 + 135 : value * 270;
-  const arcValue = centerZero ? value / 2 : value;
+interface iLine {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
+const viewBoxSize = 150;
+const circleSize = viewBoxSize / 3;
+const center = 75;
+const numTicks = 80;
+
+const KnobUi: React.FC<iKnobUiProps> = ({ value, valueColor }) => {
+  // Value indicator
+  const rotate = value * 270;
+  const [markX2, markY2] = arcLocation(center, 65, value);
+  const xSlope = markX2 - center;
+  const ySlope = markY2 - center;
+  const markX1 = markX2 - xSlope / 6;
+  const markY1 = markY2 - ySlope / 6;
+
+  const ticks: Array<iLine> = useMemo(() => {
+    const tickArray = [];
+    for (let i = 0; i < numTicks; i += 1) {
+      const [x2, y2] = arcLocation(center, 65, i / numTicks);
+      const xSlope = x2 - center;
+      const ySlope = y2 - center;
+      const x1 = x2 - xSlope / 10;
+      const y1 = y2 - ySlope / 10;
+      tickArray.push({ x1, y1, x2, y2 });
+    }
+    return tickArray;
+  }, []);
 
   return (
     <div draggable="false">
-      <svg viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="75" cy="75" r="50" stroke="white" />
+      <svg
+        viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx={center} cy={center} r={circleSize} stroke="white" />
         <circle
           cx="50"
           cy="100"
           r="5"
           fill="white"
-          transform={`rotate(${rotate}, 75,75)`}
+          transform={`rotate(${rotate}, ${center}, ${center})`}
         />
-        <path
-          className={styles.svgPath}
-          fill="transparent"
-          stroke="black"
-          strokeWidth="6px"
-          d={volumeArc(75, 72, arcValue)}
-          transform={centerZero ? "rotate(135, 75,75)" : undefined}
-        />
-        <path
-          className={`${styles.svgPath} ${styles.volumeArc}`}
-          fill="transparent"
+        {ticks.map((tick) => (
+          <line
+            x1={tick.x1}
+            y1={tick.y1}
+            x2={tick.x2}
+            y2={tick.y2}
+            stroke="#555"
+          />
+        ))}
+        <line
+          x1={markX1}
+          y1={markY1}
+          x2={markX2}
+          y2={markY2}
           stroke={valueColor}
-          strokeWidth="3px"
-          d={volumeArc(75, 72, value)}
-          style={{ ["--line-style" as any]: value == 0 ? "revert" : "round" }}
+          strokeWidth={2}
         />
       </svg>
     </div>
