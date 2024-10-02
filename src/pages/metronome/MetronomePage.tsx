@@ -2,14 +2,37 @@ import { useState } from "react";
 import Knob from "../../components/knob/Knob";
 import styles from "./metronome-page.module.css";
 import { Minus, Pause, Play, Plus } from "react-feather";
+import useTimer from "../../hooks/useTimer";
 
 const MAX_BPM = 320;
 const MIN_BPM = 1;
 
-const MetronomePage = () => {
+type PlayFunction = ({ id }: { id: string }) => void;
+
+const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bpm, setBpm] = useState(60);
-  const handleChange = (newVal: number) => {
+
+  const playBeat = (elapsed: number) => {
+    // console.log(elapsed);
+    playSound({ id: "full" });
+  };
+
+  const msPerBeat = 1000 * (60 / bpm);
+  const timer = useTimer(playBeat, msPerBeat, () => {
+    console.log("oops, error");
+  });
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      timer.stop();
+    } else {
+      timer.start();
+    }
+    setIsPlaying((state) => !state);
+  };
+
+  const handleBpmChange = (newVal: number) => {
     setBpm(newVal);
   };
   return (
@@ -40,18 +63,18 @@ const MetronomePage = () => {
         step={1}
         min={MIN_BPM}
         max={MAX_BPM}
-        onChange={handleChange}
+        onChange={handleBpmChange}
       />
       <button
         className={`${styles.bottom} ${styles.button}`}
         onClick={() => {
-          setIsPlaying(!isPlaying);
+          togglePlay();
         }}
       >
         {isPlaying ? (
-          <Play size={40} className={styles.play} />
-        ) : (
           <Pause size={40} />
+        ) : (
+          <Play size={40} className={styles.play} />
         )}
       </button>
     </div>
