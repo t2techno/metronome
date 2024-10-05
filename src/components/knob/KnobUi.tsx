@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import styles from "./knob.module.css";
 import { arcLocation } from "./knob.utilities";
 
 interface iKnobUiProps {
@@ -30,7 +29,7 @@ const KnobUi: React.FC<iKnobUiProps> = ({ value, valueColor }) => {
 
   const ticks: Array<iLine> = useMemo(() => {
     const tickArray = [];
-    for (let i = 0; i < numTicks; i += 1) {
+    for (let i = 0; i < numTicks + 1; i += 1) {
       const [x2, y2] = arcLocation(center, 65, i / numTicks);
       const xSlope = x2 - center;
       const ySlope = y2 - center;

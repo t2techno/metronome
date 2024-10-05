@@ -7,9 +7,9 @@ const SongPage = () => {
   const [beatsPerMeasure, setBeatsPerMeasure] = useState(6);
   const [subdivision, setSubdivision] = useState(8);
   const [tempo, setTempo] = useState(120);
-  // const [beatSizes, setBeatSizes] = useState<Array<BeatVolumes>>(
-  //   Array(beatsPerMeasure).fill("quarter")
-  // );
+  const [beatSizes, setBeatSizes] = useState<Array<BeatVolumes>>(
+    Array(beatsPerMeasure).fill("quarter")
+  );
   const [currentBeat, setCurrentBeat] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [play, { stop }] = useSound("/sounds/cowbellSprite.mp3", {

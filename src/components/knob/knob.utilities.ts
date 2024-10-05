@@ -95,6 +95,7 @@ export const volumeArc = (c: number, r: number, sweepPercentage: number) => {
 
 // location on circle border
 export const arcLocation = (c: number, r: number, sweepPercentage: number) => {
+  sweepPercentage = sweepPercentage === 0 ? 0.002 : sweepPercentage;
   const sweepRad = (2 * PI * sweepPercentage * 27) / 36;
   const x = c + r * cos(sweepRad + INIT_ROT);
   const y = c + r * sin(sweepRad + INIT_ROT);
