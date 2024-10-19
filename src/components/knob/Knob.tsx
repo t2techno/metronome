@@ -37,12 +37,12 @@ const Knob: React.FC<KnobProps> = ({
     newValRef.current = 0;
     oldValRef.current = 0;
     window.removeEventListener("pointerup", handlePointerUp);
-    window.removeEventListener("pointermove", handleMouseMove, true);
+    window.removeEventListener("pointermove", handlePointerMove, true);
     currentMouseY.current = -1;
     oldMouseY.current = -1;
   }, []);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
+  const handlePointerMove = useCallback((e: PointerEvent) => {
     currentMouseY.current = e.clientY;
   }, []);
 
@@ -55,15 +55,15 @@ const Knob: React.FC<KnobProps> = ({
       newValRef.current = newVal;
       oldValRef.current = value;
       window.addEventListener("pointerup", handlePointerUp);
-      window.addEventListener("pointermove", handleMouseMove, true);
+      window.addEventListener("pointermove", handlePointerMove, true);
     }
 
     if ((newVal === 0 || newVal === 1) && value != 0 && value != 1) {
       // moved down
       if (currentMouseY.current < oldMouseY.current) {
-        newVal = value + step;
+        newVal = value + 2 * step;
       } else {
-        newVal = value - step;
+        newVal = value - 2 * step;
       }
     } else {
       const valDiff = newVal - newValRef.current;
