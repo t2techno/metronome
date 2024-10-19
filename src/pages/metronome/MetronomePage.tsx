@@ -32,16 +32,13 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     setIsPlaying((state) => !state);
   };
 
-  const handleBpmChange = (newVal: number) => {
-    setBpm(newVal);
-  };
   return (
     <div className={styles.wrapper}>
       <div className={styles.tempoWrapper}>
         <button
           className={styles.button}
           onClick={() => {
-            setBpm(bpm - 1);
+            setBpm(Math.max(bpm - 1, MIN_BPM));
           }}
         >
           <Minus size={64} />
@@ -50,7 +47,7 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
         <button
           className={styles.button}
           onClick={() => {
-            setBpm(bpm + 1);
+            setBpm(Math.min(bpm + 1, MAX_BPM));
           }}
         >
           <Plus size={40} />
@@ -59,11 +56,11 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
       <p className={`caveat-600 ${styles.bpmLabel}`}>BPM</p>
       <Knob
         className={styles.knob}
-        value={bpm}
-        step={1}
-        min={MIN_BPM}
-        max={MAX_BPM}
-        onChange={handleBpmChange}
+        value={bpm / MAX_BPM}
+        step={1 / MAX_BPM}
+        min={0}
+        max={1}
+        onChange={(val) => setBpm(Math.round(val * MAX_BPM))}
       />
       <button
         className={`${styles.bottom} ${styles.button}`}
