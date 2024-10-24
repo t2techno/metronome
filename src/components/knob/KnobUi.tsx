@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { arcLocation } from "./knob.utilities";
+import styles from "./knob-ui.module.css";
 
 interface iKnobUiProps {
   value: number;
@@ -46,8 +47,27 @@ const KnobUi: React.FC<iKnobUiProps> = ({ value, valueColor }) => {
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle cx={center} cy={center} r={circleSize} stroke="white" />
+        <defs>
+          <pattern
+            id="knobTexture"
+            x="150"
+            y="150"
+            patternUnits="userSpaceOnUse"
+            height={viewBoxSize}
+            width={viewBoxSize}
+          >
+            <image x="0" y="0" xlinkHref="/knobTexture.jpg"></image>
+          </pattern>
+        </defs>
         <circle
+          fill="url(#knobTexture)"
+          cx={center}
+          cy={center}
+          r={circleSize}
+          stroke="white"
+        />
+        <circle
+          className={styles.knobHandle}
           cx="50"
           cy="100"
           r="5"
