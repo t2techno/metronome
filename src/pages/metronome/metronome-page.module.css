@@ -29,17 +29,20 @@
 .button:hover {
   background-color: white;
   border-color: orange;
-  transition: all 500ms;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .button {
+    transition: transform 450ms;
+  }
+
   .button:hover {
-    transition: 250ms;
+    transition: transform 300ms;
     transform: translateY(-4px);
   }
 
   .button:active {
-    transition: 50ms;
+    transition: transform 50ms;
     transform: translateY(2px);
   }
 }
