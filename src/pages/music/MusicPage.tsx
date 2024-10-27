@@ -3,7 +3,7 @@ import useSound from "use-sound";
 
 type BeatVolumes = "full" | "half" | "quarter";
 
-const SongPage = () => {
+const MusicPage = () => {
   const [beatsPerMeasure, setBeatsPerMeasure] = useState(6);
   const [subdivision, setSubdivision] = useState(8);
   const [tempo, setTempo] = useState(120);
@@ -80,6 +80,7 @@ const SongPage = () => {
 
   return (
     <>
+      <p>Music</p>
       {/* <button
         onClick={() => {
           togglePlay();
@@ -127,4 +128,4 @@ const SongPage = () => {
   );
 };
 
-export default SongPage;
+export default MusicPage;
