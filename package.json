@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-slider": "^1.2.0",
+    "@radix-ui/react-toggle-group": "^1.1.0",
     "react": "19.0.0-rc-1631855f-20241023",
     "react-dom": "19.0.0-rc-1631855f-20241023",
     "react-feather": "^2.0.10",
