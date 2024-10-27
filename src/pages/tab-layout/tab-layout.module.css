@@ -16,6 +16,11 @@
   padding: 6px;
 }
 
+.tabItem[data-state="on"] {
+  background-color: hsl(34, 71%, 56%);
+  color: black;
+}
+
 .inactiveTab {
   pointer-events: none;
   cursor: default;
