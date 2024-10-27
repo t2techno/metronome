@@ -1,0 +1,22 @@
+.tabBar {
+  position: absolute;
+  bottom: 32px;
+  left: 50px;
+  right: 50px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tabItem {
+  border: solid 2px black;
+  border-radius: 4px;
+  font-size: 1.5rem;
+  padding: 6px;
+}
+
+.inactiveTab {
+  pointer-events: none;
+  cursor: default;
+}
