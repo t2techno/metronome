@@ -2,6 +2,7 @@ import { useState } from "react";
 import BeatGroup, { iBeatGroup } from "../../components/BeatGroup";
 import styles from "./music-page.module.css";
 import TimeSignature from "../../components/TimeSignature";
+import Beat from "../../components/Beat";
 
 const testGroup: iBeatGroup = {
   key: Math.random(),
@@ -22,6 +23,11 @@ const MusicPage = () => {
     newGroups[idx] = newGroup;
     setBeatGroups(newGroups);
   };
+
+  const beats = new Array(beatGroups[currentGroup].beatsPerMeasure).fill(0)
+      .map((_,idx) =>
+        <Beat key={idx} size={0.5} active={false} onClick={()=>{}}/>
+      )
 
   const createNewGroup = () => {
     const groups = [...beatGroups];
@@ -44,7 +50,7 @@ const MusicPage = () => {
             beatsPerMeasure={beatGroups[currentGroup].beatsPerMeasure}
             subdivision={beatGroups[currentGroup].subdivision}
           />
-          {<p>beat indicators...</p>}
+          <div className={styles.beatRow}>{beats}</div>
         </>
       )}
       <hr />

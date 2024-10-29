@@ -1,14 +1,16 @@
 .wrapper {
   cursor: pointer;
   border: 1px solid gray;
-  height: 150px;
   border-radius: 16px;
+  height: 100%;
+  width: 100%;
 }
 
 .beat {
   border: 2px solid black;
-  height: 150px;
   border-radius: 16px;
+  height: 100%;
+  width: 100%;
 }
 
 .active {
