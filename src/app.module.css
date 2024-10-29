@@ -9,10 +9,6 @@
   gap: 16px;
 }
 
-.timeSignature {
-  width: fit-content;
-}
-
 .row p {
   font-size: 24px;
   margin: 0;
