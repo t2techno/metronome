@@ -1,6 +1,13 @@
 .wrapper {
+  all: unset;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
+  transition: all 500ms;
+}
+
+.wrapper:hover {
+  box-shadow: inset 0 0 10px #f8a100;
 }
