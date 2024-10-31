@@ -1,19 +1,20 @@
 import { PropsWithChildren } from "react";
-import styles from "./beat-group-field.module.css";
+import styles from "./group-field.module.css";
+import useLongPress from "../../hooks/useLongPress";
 
 interface iFieldProps {
   label: string;
-  onClick: () => void;
-  // onLongClick: () => void;
+  onLongPress: () => void;
 }
 
 const BeatGroupField: React.FC<PropsWithChildren<iFieldProps>> = ({
   label,
-  onClick,
+  onLongPress,
   children,
 }) => {
+  const longPress = useLongPress(onLongPress);
   return (
-    <button className={`${styles.wrapper} caveat-800`} onClick={onClick}>
+    <button className={`${styles.wrapper} caveat-800`} {...longPress}>
       <p>{label}</p>
       {children}
     </button>
