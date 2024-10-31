@@ -26,11 +26,11 @@ const useLongPress = (callback = () => {}, ms = 300) => {
   }, []);
 
   return {
-    onMouseDown: () => start,
-    onMouseUp: () => stop,
-    onMouseLeave: () => stop,
-    onTouchStart: () => start,
-    onTouchEnd: () => stop,
+    onMouseDown: start,
+    onMouseUp: stop,
+    onMouseLeave: stop,
+    onTouchStart: start,
+    onTouchEnd: stop,
   };
 };
 
