@@ -1,8 +1,10 @@
 import { useState } from "react";
-import BeatGroup, { iBeatGroup } from "../../components/BeatGroup";
+
 import styles from "./music-page.module.css";
 import TimeSignature from "../../components/TimeSignature";
 import Beat from "../../components/Beat";
+import GroupInfo, { iBeatGroup } from "../../components/GroupInfo";
+import GroupTab from "../../components/GroupTab";
 
 const testGroup: iBeatGroup = {
   key: Math.random(),
@@ -16,7 +18,6 @@ const testGroup: iBeatGroup = {
 
 const MusicPage = () => {
   const [beatGroups, setBeatGroups] = useState<Array<iBeatGroup>>([testGroup]);
-  const [openGroup, setOpenGroup] = useState(-1);
   const [currentGroup, setCurrentGroup] = useState(0);
   const [currentMeasure, setCurrentMeasure] = useState(0);
 
@@ -34,7 +35,6 @@ const MusicPage = () => {
 
   const nextName = () => {
     const newCharCode = 65 + (beatGroups.length % 26);
-    console.log(`length: ${beatGroups.length}`);
     const multiple = Math.ceil(beatGroups.length / 25);
     const newName = String.fromCharCode(newCharCode).repeat(multiple);
     return newName;
@@ -69,16 +69,26 @@ const MusicPage = () => {
       <hr />
 
       <div className={styles.groupWrapper}>
-        {beatGroups.map((group, idx) => (
-          <BeatGroup
-            key={group.key}
+        <div className={styles.groupSection}>
+          <GroupInfo
             currentMeasure={currentMeasure}
-            group={group}
-            updateGroup={(newGroup: iBeatGroup) => {
-              handleGroupUpdate(idx, newGroup);
-            }}
+            group={beatGroups[currentGroup]}
+            updateGroup={() => {}}
           />
-        ))}
+
+          <div className={styles.groupTabWrapper}>
+            {beatGroups.map((group, idx) => (
+              <GroupTab
+                key={group.key}
+                name={group.name}
+                onLongPress={() => {
+                  console.log("long press, opening group " + idx);
+                  setCurrentGroup(idx);
+                }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
       <button className={styles.addGroupButton} onClick={createNewGroup}>
         Add group
