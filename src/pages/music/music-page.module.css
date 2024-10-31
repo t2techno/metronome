@@ -1,4 +1,6 @@
 .wrapper {
+  max-width: 800px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,16 +22,19 @@
   width: 100%;
 }
 
-.groupWrapper {
+.infoRow {
+  display: flex;
+  justify-content: center;
   width: 100%;
+  gap: 24px;
+  margin-left: -24px;
 }
 
-.groupTabWrapper {
+.groupTabs {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
 .addGroupButton {
-  margin-top: 12px;
 }

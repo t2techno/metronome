@@ -1,9 +1,21 @@
 import Field from "../GroupField";
 
-const GroupTab = ({ name, onLongPress }: { name: string; onLongPress: () => void }) => {
+interface iGroupTabProps {
+  name: string;
+  start: number;
+  end: number;
+  onLongPress: () => void;
+}
+
+const GroupTab: React.FC<iGroupTabProps> = ({
+  name,
+  start,
+  end,
+  onLongPress,
+}) => {
   return (
     <Field label="Section" onLongPress={onLongPress}>
-      {name}
+      {`${name}: ${start} - ${end}`}
     </Field>
   );
 };

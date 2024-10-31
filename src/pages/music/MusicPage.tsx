@@ -68,31 +68,33 @@ const MusicPage = () => {
       )}
       <hr />
 
-      <div className={styles.groupWrapper}>
-        <div className={styles.groupSection}>
+      <div className={styles.groupSection}>
+        <div className={styles.infoRow}>
+          <button className={styles.addGroupButton} onClick={createNewGroup}>
+            Add group
+          </button>
           <GroupInfo
             currentMeasure={currentMeasure}
             group={beatGroups[currentGroup]}
             updateGroup={() => {}}
           />
+        </div>
 
-          <div className={styles.groupTabWrapper}>
-            {beatGroups.map((group, idx) => (
-              <GroupTab
-                key={group.key}
-                name={group.name}
-                onLongPress={() => {
-                  console.log("long press, opening group " + idx);
-                  setCurrentGroup(idx);
-                }}
-              />
-            ))}
-          </div>
+        <div className={styles.groupTabs}>
+          {beatGroups.map((group, idx) => (
+            <GroupTab
+              key={group.key}
+              name={group.name}
+              start={group.start}
+              end={group.end}
+              onLongPress={() => {
+                console.log("long press, opening group " + idx);
+                setCurrentGroup(idx);
+              }}
+            />
+          ))}
         </div>
       </div>
-      <button className={styles.addGroupButton} onClick={createNewGroup}>
-        Add group
-      </button>
     </div>
   );
 };
