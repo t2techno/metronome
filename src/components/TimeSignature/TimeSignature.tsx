@@ -11,9 +11,9 @@ const TimeSignature: React.FC<iTimeSigProps> = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      <p>{beatsPerMeasure}</p>
-      <hr />
-      <p>{subdivision}</p>
+      <p>
+        {beatsPerMeasure}/{subdivision}
+      </p>
     </div>
   );
 };
