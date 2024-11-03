@@ -19,7 +19,7 @@ const testGroup: iBeatGroup = {
 const MusicPage = () => {
   const [beatGroups, setBeatGroups] = useState<Array<iBeatGroup>>([testGroup]);
   const [currentGroup, setCurrentGroup] = useState(0);
-  const [currentMeasure, setCurrentMeasure] = useState(0);
+  const [currentMeasure, setCurrentMeasure] = useState(1);
 
   const handleGroupUpdate = (idx: number, newGroup: iBeatGroup) => {
     const newGroups = [...beatGroups];
@@ -53,6 +53,7 @@ const MusicPage = () => {
     };
     groups.push(newGroup);
     setBeatGroups(groups);
+    setCurrentGroup(groups.length - 1);
   };
 
   return (
@@ -63,6 +64,7 @@ const MusicPage = () => {
             beatsPerMeasure={beatGroups[currentGroup].beatsPerMeasure}
             subdivision={beatGroups[currentGroup].subdivision}
           />
+          {currentMeasure}
           <div className={styles.beatRow}>{beats}</div>
         </>
       )}

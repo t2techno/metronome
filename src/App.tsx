@@ -1,5 +1,3 @@
-import { PropsWithChildren, useMemo } from "react";
-
 import styles from "./app.module.css";
 import useTimer from "./hooks/useTimer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -8,7 +6,7 @@ import MetronomePage from "./pages/metronome/MetronomePage";
 import TabLayout from "./pages/tab-layout";
 import MusicPage from "./pages/music";
 
-const App: React.FC<PropsWithChildren> = ({ children }) => {
+const App = () => {
   const [play, { stop }] = useSound("/sounds/cowbellSprite.mp3", {
     sprite: {
       full: [0, 313],

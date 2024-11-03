@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Field from "../GroupField";
 import TimeSignature from "../TimeSignature";
 import styles from "./group-info.module.css";
+import InputPopover from "../Popover/InputPopover";
 
 export interface iBeatGroup {
   key: number;
@@ -20,6 +22,8 @@ export type GroupFields =
   | "beatsPerMeasure"
   | "subdivision";
 
+type InputFields = "start" | "end" | "tempo" | "current" | "timeSig";
+
 interface iGroupInfoProps {
   currentMeasure: number;
   group: iBeatGroup;
@@ -31,9 +35,20 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
   currentMeasure,
   updateGroup,
 }) => {
-  const handleClick = () => {
-    //todo
+  const [editField, setEditField] = useState<InputFields | "">("");
+  const handleClick = (field: InputFields) => {
+    if (field === editField) {
+      setEditField("");
+    } else {
+      setEditField(field);
+    }
   };
+
+  const handleFieldChange = (field: GroupFields, newVal: number) => {
+    console.log(field + " - " + newVal);
+    updateGroup({ ...group, [field]: newVal });
+  };
+
   let position = "";
   if (currentMeasure < group.start) {
     position = `${group.start - currentMeasure} before`;
@@ -45,31 +60,38 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      <Field label="Section" onLongPress={handleClick}>
-        {group.name}
-      </Field>
-      <Field label="Start" onLongPress={handleClick}>
-        {group.start}
-      </Field>
-      <div className={styles.seperator} />
-      <Field label="End" onLongPress={handleClick}>
-        {group.end >= 0 ? group.end : "-"}
-      </Field>
-      <div className={styles.seperator} />
-      <Field label="Current" onLongPress={handleClick}>
-        {position}
-      </Field>
-      <div className={styles.seperator} />
-      <Field label="TimeSignature" onLongPress={handleClick}>
-        <TimeSignature
-          beatsPerMeasure={group.beatsPerMeasure}
-          subdivision={group.subdivision}
-        />
-      </Field>
-      <div className={styles.seperator} />
-      <Field label="Tempo" onLongPress={handleClick}>
-        {group.tempo}
-      </Field>
+      <div className={styles.groupSection}>
+        <Field label="Section" onLongPress={() => {}}>
+          {group.name}
+        </Field>
+        <Field label="Start" onLongPress={() => handleClick("start")}>
+          <InputPopover
+            isOpen={editField === "start"}
+            onClose={() => setEditField("")}
+            label="start"
+            value={group.start}
+            onValueChange={(val) => handleFieldChange("start", val)}
+          />
+          {group.start}
+        </Field>
+        <Field label="End" onLongPress={() => handleClick("end")}>
+          {group.end >= 0 ? group.end : "-"}
+        </Field>
+        <Field label="Current" onLongPress={() => handleClick("current")}>
+          {position}
+        </Field>
+      </div>
+      <div className={styles.groupSection}>
+        <Field label="TimeSignature" onLongPress={() => handleClick("timeSig")}>
+          <TimeSignature
+            beatsPerMeasure={group.beatsPerMeasure}
+            subdivision={group.subdivision}
+          />
+        </Field>
+        <Field label="Tempo" onLongPress={() => handleClick("tempo")}>
+          {group.tempo}
+        </Field>
+      </div>
     </div>
   );
 };
