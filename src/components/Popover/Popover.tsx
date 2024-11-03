@@ -4,18 +4,30 @@ import styles from "./popover.module.css";
 import { PropsWithChildren, ReactNode } from "react";
 
 interface iPopoverProps {
-  trigger: ReactNode;
+  trigger?: ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const Popover: React.FC<PropsWithChildren<iPopoverProps>> = ({
   children,
   trigger,
+  isOpen,
+  onClose,
 }) => {
   return (
-    <PopoverBase.Root>
-      <PopoverBase.Trigger asChild>
-        <button className={styles.TriggerButton}>{trigger}</button>
-      </PopoverBase.Trigger>
+    <PopoverBase.Root
+      open={isOpen}
+      onOpenChange={(open) => {
+        console.log("popover change: " + open);
+        onClose();
+      }}
+    >
+      {trigger && (
+        <PopoverBase.Trigger asChild>
+          <button className={styles.TriggerButton}>{trigger}</button>
+        </PopoverBase.Trigger>
+      )}
       <PopoverBase.Anchor />
       <PopoverBase.Portal>
         <PopoverBase.Content className={styles.PopoverContent}>
