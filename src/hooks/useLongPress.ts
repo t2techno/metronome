@@ -6,7 +6,10 @@ const useLongPress = (callback = () => {}, ms = 300) => {
 
   useEffect(() => {
     if (startLongPress) {
-      idRef.current = setTimeout(callback, ms);
+      idRef.current = setTimeout(() => {
+        setStartLongPress(false);
+        callback();
+      }, ms);
     } else {
       clearTimeout(idRef.current);
       idRef.current = -1;
