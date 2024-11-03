@@ -78,7 +78,9 @@ const MusicPage = () => {
           <GroupInfo
             currentMeasure={currentMeasure}
             group={beatGroups[currentGroup]}
-            updateGroup={() => {}}
+            updateGroup={(newGroup: iBeatGroup) => {
+              handleGroupUpdate(currentGroup, newGroup);
+            }}
           />
         </div>
 

@@ -64,11 +64,17 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
         <Field label="Section" onLongPress={() => {}}>
           {group.name}
         </Field>
-        <Field label="Start" onLongPress={() => handleClick("start")}>
+        <Field
+          label="Start"
+          onLongPress={() => {
+            handleClick("start");
+          }}
+        >
           <InputPopover
             isOpen={editField === "start"}
             onClose={() => setEditField("")}
             label="start"
+            type="number"
             value={group.start}
             onValueChange={(val) => handleFieldChange("start", val)}
           />
