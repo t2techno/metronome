@@ -1,3 +1,14 @@
+todo: 
+  -pickup measure
+  -fermata
+  -self-host the font
+  -framer motion on nav
+  -open group is current active while playing
+  -Closed group is name and measure
+  -Open a group and change the current measure to adjust overall measure 
+    - ex: 12 measures into section C (changes current measure to 54)
+
+
 App: Tabs: Metronome screen, song screen, edit screen
 Metronome Screen:
   - similar to image in /public from behance
@@ -9,6 +20,7 @@ Song Screen:
   - different volume per beat
   - set tempo/time signature for number of measures
   - set custom time for fermata
+
 
 edit screen:
   -tbd

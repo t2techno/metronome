@@ -1,25 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import styles from "./music-page.module.css";
 import TimeSignature from "../../components/TimeSignature";
 import Beat from "../../components/Beat";
-import GroupInfo, { iBeatGroup } from "../../components/GroupInfo";
+import GroupInfo from "../../components/GroupInfo";
 import GroupTab from "../../components/GroupTab";
-
-const testGroup: iBeatGroup = {
-  key: Math.random(),
-  name: "A",
-  start: 1,
-  end: 25,
-  tempo: 60,
-  beatsPerMeasure: 4,
-  subdivision: 4,
-};
+import { MusicContext, iBeatGroup } from "../../provider/MusicProvider";
 
 const MusicPage = () => {
-  const [beatGroups, setBeatGroups] = useState<Array<iBeatGroup>>([testGroup]);
-  const [currentGroup, setCurrentGroup] = useState(0);
-  const [currentMeasure, setCurrentMeasure] = useState(1);
+  const {
+    beatGroups,
+    setBeatGroups,
+    currentGroup,
+    currentMeasure,
+    setCurrent,
+  } = useContext(MusicContext);
 
   const handleGroupUpdate = (idx: number, newGroup: iBeatGroup) => {
     const newGroups = [...beatGroups];
@@ -53,7 +48,7 @@ const MusicPage = () => {
     };
     groups.push(newGroup);
     setBeatGroups(groups);
-    setCurrentGroup(groups.length - 1);
+    setCurrent("group", groups.length - 1);
   };
 
   return (
@@ -93,7 +88,7 @@ const MusicPage = () => {
               end={group.end}
               onLongPress={() => {
                 console.log("long press, opening group " + idx);
-                setCurrentGroup(idx);
+                setCurrent("group", idx);
               }}
             />
           ))}

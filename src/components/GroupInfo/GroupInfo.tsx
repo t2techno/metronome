@@ -3,24 +3,7 @@ import Field from "../GroupField";
 import TimeSignature from "../TimeSignature";
 import styles from "./group-info.module.css";
 import InputPopover from "../Popover/InputPopover";
-
-export interface iBeatGroup {
-  key: number;
-  name: string;
-  start: number;
-  end: number;
-  tempo: number;
-  beatsPerMeasure: number;
-  subdivision: number;
-}
-
-export type GroupFields =
-  | "name"
-  | "start"
-  | "end"
-  | "tempo"
-  | "beatsPerMeasure"
-  | "subdivision";
+import { iBeatGroup, GroupFields } from "../../provider/MusicProvider";
 
 type InputFields = "start" | "end" | "tempo" | "current" | "timeSig";
 
@@ -75,13 +58,22 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
             onClose={() => setEditField("")}
             label="start"
             type="number"
+            min={1}
             value={group.start}
             onValueChange={(val) => handleFieldChange("start", val)}
           />
           {group.start}
         </Field>
         <Field label="End" onLongPress={() => handleClick("end")}>
-          {group.end >= 0 ? group.end : "-"}
+          <InputPopover
+            isOpen={editField === "end"}
+            onClose={() => setEditField("")}
+            label="end"
+            type="number"
+            value={group.end}
+            onValueChange={(val) => handleFieldChange("end", val)}
+          />
+          {group.end}
         </Field>
         <Field label="Current" onLongPress={() => handleClick("current")}>
           {position}

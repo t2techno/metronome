@@ -5,6 +5,7 @@ import useSound from "use-sound";
 import MetronomePage from "./pages/metronome/MetronomePage";
 import TabLayout from "./pages/tab-layout";
 import MusicPage from "./pages/music";
+import MusicProvider from "./provider/MusicProvider";
 
 const App = () => {
   const [play, { stop }] = useSound("/sounds/cowbellSprite.mp3", {
@@ -21,7 +22,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<TabLayout />}>
             <Route index element={<MetronomePage playSound={play} />} />
-            <Route path="/music" element={<MusicPage />} />
+            <MusicProvider>
+              <Route path="/music" element={<MusicPage />} />
+            </MusicProvider>
           </Route>
         </Routes>
       </BrowserRouter>
