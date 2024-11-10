@@ -14,6 +14,7 @@ const MusicPage = () => {
     currentGroup,
     currentMeasure,
     setCurrent,
+    reset,
   } = useContext(MusicContext);
 
   const handleGroupUpdate = (idx: number, newGroup: iBeatGroup) => {
@@ -77,6 +78,9 @@ const MusicPage = () => {
               handleGroupUpdate(currentGroup, newGroup);
             }}
           />
+          <button className={styles.addGroupButton} onClick={reset}>
+            Reset
+          </button>
         </div>
 
         <div className={styles.groupTabs}>

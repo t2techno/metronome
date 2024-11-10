@@ -19,14 +19,14 @@ const App = () => {
   return (
     <main className={styles.wrapper}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<TabLayout />}>
-            <Route index element={<MetronomePage playSound={play} />} />
-            <MusicProvider>
+        <MusicProvider>
+          <Routes>
+            <Route path="/" element={<TabLayout />}>
+              <Route index element={<MetronomePage playSound={play} />} />
               <Route path="/music" element={<MusicPage />} />
-            </MusicProvider>
-          </Route>
-        </Routes>
+            </Route>
+          </Routes>
+        </MusicProvider>
       </BrowserRouter>
     </main>
   );

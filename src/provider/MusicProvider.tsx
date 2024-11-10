@@ -34,6 +34,7 @@ interface iContextData {
   currentGroup: number;
   currentMeasure: number;
   setCurrent: (field: "group" | "beat", val: number) => void;
+  reset: () => void;
 }
 
 const initContextData = {
@@ -42,6 +43,7 @@ const initContextData = {
   currentGroup: 0,
   currentMeasure: 1,
   setCurrent: () => {},
+  reset: () => {},
 };
 
 export const MusicContext = createContext<iContextData>(initContextData);
@@ -63,12 +65,19 @@ const MusicProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setBeatGroups(newGroups);
   };
 
+  const reset = () => {
+    setBeatGroups([initGroup]);
+    setCurrentGroup(0);
+    setCurrentMeasure(0);
+  };
+
   const data: iContextData = {
     beatGroups,
     setBeatGroups,
     currentGroup,
     currentMeasure,
     setCurrent,
+    reset,
   };
   return <MusicContext.Provider value={data}>{children}</MusicContext.Provider>;
 };
