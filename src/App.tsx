@@ -18,7 +18,8 @@ const App = () => {
 
   return (
     <main className={styles.wrapper}>
-      <BrowserRouter>
+      <MetronomePage playSound={play} />
+      {/* <BrowserRouter>
         <MusicProvider>
           <Routes>
             <Route path="/" element={<TabLayout />}>
@@ -27,7 +28,7 @@ const App = () => {
             </Route>
           </Routes>
         </MusicProvider>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </main>
   );
 };
