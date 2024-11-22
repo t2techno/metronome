@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import Popover from "../Popover";
 import styles from "./input-popover.module.css";
 

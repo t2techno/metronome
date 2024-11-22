@@ -3,6 +3,8 @@ import Knob from "../../components/knob/Knob";
 import styles from "./metronome-page.module.css";
 import { Minus, Pause, Play, Plus } from "react-feather";
 import useTimer from "../../hooks/useTimer";
+import TimeSignature from "../../components/TimeSignature";
+import Beat from "../../components/Beat";
 
 const MAX_BPM = 320;
 const MIN_BPM = 1;
@@ -12,9 +14,13 @@ type PlayFunction = ({ id }: { id: string }) => void;
 const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bpm, setBpm] = useState(60);
+  const [beatsPerMeasure, setBeatsPerMeasure] = useState(4);
+  const [subdivision, setSubdivision] = useState(4);
+  const [activeBeat, setActiveBeat] = useState(0);
 
   const playBeat = (elapsed: number) => {
-    // console.log(elapsed);
+    console.log(elapsed);
+    setActiveBeat(elapsed % beatsPerMeasure);
     playSound({ id: "full" });
   };
 
@@ -32,8 +38,19 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     setIsPlaying((state) => !state);
   };
 
+  const beats = new Array(beatsPerMeasure)
+    .fill(0)
+    .map((_, idx) => <Beat key={idx} active={activeBeat === idx} />);
+
   return (
     <div className={styles.wrapper}>
+      <div className={`caveat-600 ${styles.timeSigWrapper}`}>
+        <TimeSignature
+          beatsPerMeasure={beatsPerMeasure}
+          subdivision={subdivision}
+        />
+      </div>
+      <div className={styles.beatRow}>{beats}</div>
       <div className={styles.tempoWrapper}>
         <button
           className={styles.button}

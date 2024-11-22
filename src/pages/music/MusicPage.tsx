@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import styles from "./music-page.module.css";
 import TimeSignature from "../../components/TimeSignature";
-import Beat from "../../components/Beat";
+import Beat from "../../components/BeatBackup";
 import GroupInfo from "../../components/GroupInfo";
 import GroupTab from "../../components/GroupTab";
 import { MusicContext } from "../../provider/MusicProvider";
