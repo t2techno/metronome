@@ -15,11 +15,11 @@ const useTimer = (
   const isPlaying = useRef(false);
 
   const start = () => {
-    tick();
     expected.current = Date.now() + interval;
     count.current = 0;
     isPlaying.current = true;
     intervalRef.current = interval;
+    tick();
     timeout.current = window.setTimeout(step, interval);
   };
 
