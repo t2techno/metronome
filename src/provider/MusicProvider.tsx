@@ -30,7 +30,8 @@ const initGroup = {
 
 interface iContextData {
   beatGroups: Array<iBeatGroup>;
-  setBeatGroups: React.Dispatch<React.SetStateAction<iBeatGroup[]>>;
+  addBeatGroup: () => void;
+  updateBeatGroups: (field: GroupFields, newVal: number) => void;
   currentGroup: number;
   currentMeasure: number;
   setCurrent: (field: "group" | "beat", val: number) => void;
@@ -39,7 +40,8 @@ interface iContextData {
 
 const initContextData = {
   beatGroups: [],
-  setBeatGroups: () => {},
+  addBeatGroup: () => {},
+  updateBeatGroups: () => {},
   currentGroup: 0,
   currentMeasure: 1,
   setCurrent: () => {},
@@ -61,8 +63,54 @@ const MusicProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const updateBeatGroups = (newGroups: Array<iBeatGroup>) => {
+  const updateBeatGroups = (field: GroupFields, newVal: number) => {
+    console.log(field + " - " + newVal);
+    const newGroups = [...beatGroups];
+    switch (field) {
+      case "start": {
+        newGroups[currentGroup] = { ...newGroups[currentGroup], start: newVal };
+        newGroups[currentGroup - 1] = {
+          ...newGroups[currentGroup - 1],
+          end: newVal - 1,
+        };
+        break;
+      }
+
+      case "end": {
+        newGroups[currentGroup] = { ...newGroups[currentGroup], end: newVal };
+        if (currentGroup < beatGroups.length - 1) {
+          newGroups[currentGroup + 1] = {
+            ...newGroups[currentGroup + 1],
+            start: newVal + 1,
+          };
+        }
+        break;
+      }
+    }
     setBeatGroups(newGroups);
+  };
+
+  const nextName = () => {
+    const newCharCode = 65 + (beatGroups.length % 26);
+    const multiple = Math.ceil(beatGroups.length / 25);
+    const newName = String.fromCharCode(newCharCode).repeat(multiple);
+    return newName;
+  };
+
+  const addBeatGroup = () => {
+    const groups = [...beatGroups];
+    const lastGroup = groups[groups.length - 1];
+    // A = 65 ascii
+    const newGroup: iBeatGroup = {
+      ...lastGroup,
+      name: nextName(),
+      key: Math.random(),
+      start: lastGroup.end + 1,
+      end: lastGroup.end + 2,
+    };
+    groups.push(newGroup);
+    setBeatGroups(groups);
+    setCurrent("group", groups.length - 1);
   };
 
   const reset = () => {
@@ -73,7 +121,8 @@ const MusicProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const data: iContextData = {
     beatGroups,
-    setBeatGroups,
+    addBeatGroup,
+    updateBeatGroups,
     currentGroup,
     currentMeasure,
     setCurrent,

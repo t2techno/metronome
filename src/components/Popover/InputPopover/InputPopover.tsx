@@ -9,6 +9,7 @@ type InputPopoverProps = React.ComponentProps<"input"> & {
   onValueChange: (value: any) => void;
 };
 
+// todo: close on enter key press
 const InputPopover: React.FC<InputPopoverProps> = ({
   isOpen,
   onClose,
