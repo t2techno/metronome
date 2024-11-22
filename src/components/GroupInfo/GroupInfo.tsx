@@ -1,24 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Field from "../GroupField";
 import TimeSignature from "../TimeSignature";
 import styles from "./group-info.module.css";
 import InputPopover from "../Popover/InputPopover";
-import { iBeatGroup, GroupFields } from "../../provider/MusicProvider";
+import {
+  iBeatGroup,
+  GroupFields,
+  MusicContext,
+} from "../../provider/MusicProvider";
 
 type InputFields = "start" | "end" | "tempo" | "current" | "timeSig";
 
-interface iGroupInfoProps {
-  currentMeasure: number;
-  group: iBeatGroup;
-  updateGroup: (newGroup: iBeatGroup) => void;
-}
-
-const GroupInfo: React.FC<iGroupInfoProps> = ({
-  group,
-  currentMeasure,
-  updateGroup,
-}) => {
+const GroupInfo = () => {
+  const { beatGroups, setBeatGroups, currentGroup, currentMeasure } =
+    useContext(MusicContext);
   const [editField, setEditField] = useState<InputFields | "">("");
+  const group = beatGroups[currentGroup];
+
   const handleClick = (field: InputFields) => {
     if (field === editField) {
       setEditField("");
@@ -29,7 +27,9 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
 
   const handleFieldChange = (field: GroupFields, newVal: number) => {
     console.log(field + " - " + newVal);
-    updateGroup({ ...group, [field]: newVal });
+    const newGroups = [...beatGroups];
+    newGroups[currentGroup] = { ...group, [field]: newVal };
+    setBeatGroups(newGroups);
   };
 
   let position = "";
@@ -58,7 +58,8 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
             onClose={() => setEditField("")}
             label="start"
             type="number"
-            min={1}
+            min={currentGroup === 0 ? 1 : beatGroups[currentGroup - 1].end + 1}
+            max={group.end - 1}
             value={group.start}
             onValueChange={(val) => handleFieldChange("start", val)}
           />
@@ -70,6 +71,12 @@ const GroupInfo: React.FC<iGroupInfoProps> = ({
             onClose={() => setEditField("")}
             label="end"
             type="number"
+            min={group.start + 1}
+            max={
+              currentGroup === beatGroups.length - 1
+                ? undefined
+                : beatGroups[currentGroup + 1].start - 1
+            }
             value={group.end}
             onValueChange={(val) => handleFieldChange("end", val)}
           />

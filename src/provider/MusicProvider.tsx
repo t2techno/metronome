@@ -51,7 +51,7 @@ export const MusicContext = createContext<iContextData>(initContextData);
 const MusicProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [beatGroups, setBeatGroups] = useState<Array<iBeatGroup>>([initGroup]);
   const [currentGroup, setCurrentGroup] = useState(0);
-  const [currentMeasure, setCurrentMeasure] = useState(0);
+  const [currentMeasure, setCurrentMeasure] = useState(1);
 
   const setCurrent = (field: "group" | "beat", val: number) => {
     if (field === "beat") {

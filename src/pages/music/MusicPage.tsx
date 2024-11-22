@@ -17,12 +17,6 @@ const MusicPage = () => {
     reset,
   } = useContext(MusicContext);
 
-  const handleGroupUpdate = (idx: number, newGroup: iBeatGroup) => {
-    const newGroups = [...beatGroups];
-    newGroups[idx] = newGroup;
-    setBeatGroups(newGroups);
-  };
-
   const beats = new Array(beatGroups[currentGroup].beatsPerMeasure)
     .fill(0)
     .map((_, idx) => (
@@ -68,17 +62,11 @@ const MusicPage = () => {
 
       <div className={styles.groupSection}>
         <div className={styles.infoRow}>
-          <button className={styles.addGroupButton} onClick={createNewGroup}>
+          <button className={styles.groupButton} onClick={createNewGroup}>
             Add group
           </button>
-          <GroupInfo
-            currentMeasure={currentMeasure}
-            group={beatGroups[currentGroup]}
-            updateGroup={(newGroup: iBeatGroup) => {
-              handleGroupUpdate(currentGroup, newGroup);
-            }}
-          />
-          <button className={styles.addGroupButton} onClick={reset}>
+          <GroupInfo />
+          <button className={styles.groupButton} onClick={reset}>
             Reset
           </button>
         </div>
