@@ -1,30 +1,19 @@
 import styles from "./beat.module.css";
 
 interface iBeatProps {
-  size: number;
   active: boolean;
-  onClick: () => void;
 }
 
-const Beat: React.FC<iBeatProps> = ({
-  active,
-  onClick,
-  size,
-}) => {
-
+const Beat: React.FC<iBeatProps> = ({ active }) => {
   return (
-    <button
-      className={`${styles.wrapper}`}
-      onClick={() => {
-        onClick();
-      }}
-    >
-      <div
-        onClick={onClick}
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle
+        cx="50"
+        cy="50"
+        r="50"
         className={`${styles.beat} ${active && styles.active}`}
-        style={{ scale: `${size}` }}
       />
-    </button>
+    </svg>
   );
 };
 

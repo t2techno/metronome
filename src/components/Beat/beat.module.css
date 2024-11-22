@@ -1,18 +1,7 @@
-.wrapper {
-  cursor: pointer;
-  border: 1px solid gray;
-  border-radius: 16px;
-  height: 100%;
-  width: 100%;
-}
-
 .beat {
-  border: 2px solid black;
-  border-radius: 16px;
-  height: 100%;
-  width: 100%;
+  fill: gray;
 }
 
 .active {
-  background-color: orange;
+  fill: orange;
 }
