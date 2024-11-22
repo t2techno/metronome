@@ -5,6 +5,7 @@ import { Minus, Pause, Play, Plus } from "react-feather";
 import useTimer from "../../hooks/useTimer";
 import TimeSignature from "../../components/TimeSignature";
 import Beat from "../../components/Beat";
+import Settings from "../../components/Settings";
 
 const MAX_BPM = 320;
 const MIN_BPM = 1;
@@ -44,11 +45,14 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={`caveat-600 ${styles.timeSigWrapper}`}>
-        <TimeSignature
-          beatsPerMeasure={beatsPerMeasure}
-          subdivision={subdivision}
-        />
+      <div className={styles.topRow}>
+        <Settings />
+        <div className={`caveat-600 ${styles.timeSigWrapper}`}>
+          <TimeSignature
+            beatsPerMeasure={beatsPerMeasure}
+            subdivision={subdivision}
+          />
+        </div>
       </div>
       <div className={styles.beatRow}>{beats}</div>
       <div className={styles.tempoWrapper}>
@@ -77,7 +81,7 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
         step={1 / MAX_BPM}
         min={0}
         max={1}
-        onChange={(val) => setBpm(Math.round(val * MAX_BPM))}
+        onChange={(val) => setBpm(Math.max(Math.round(val * MAX_BPM), 1))}
       />
       <button
         className={`${styles.bottom} ${styles.button}`}

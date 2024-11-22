@@ -10,8 +10,29 @@
   border-radius: 24px;
 }
 
+.topRow {
+  position: relative;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.settingsButton {
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  border-radius: 100vmax;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .timeSigWrapper {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 .beatRow {
