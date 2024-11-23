@@ -6,6 +6,7 @@ import MetronomePage from "./pages/metronome/MetronomePage";
 import TabLayout from "./pages/tab-layout";
 import MusicPage from "./pages/music";
 import MusicProvider from "./provider/MusicProvider";
+import { MetronomeProvider } from "./provider/MetronomeProvider";
 
 const App = () => {
   const [play, { stop }] = useSound("/sounds/cowbellSprite.mp3", {
@@ -18,7 +19,9 @@ const App = () => {
 
   return (
     <main className={styles.wrapper}>
-      <MetronomePage playSound={play} />
+      <MetronomeProvider>
+        <MetronomePage playSound={play} />
+      </MetronomeProvider>
       {/* <BrowserRouter>
         <MusicProvider>
           <Routes>
