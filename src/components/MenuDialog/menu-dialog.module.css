@@ -1,11 +1,12 @@
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
 }
-@keyframes fadeIn {
+
+@keyframes slideOut {
   from {
-    opacity: 0;
+    transform: translateX(0);
   }
 }
 
@@ -19,17 +20,17 @@
   z-index: 3;
   position: fixed;
   inset: 0;
-  background: hsla(256, 29%, 10%, 0.75);
+  background: hsla(36, 29%, 10%, 0.75);
   backdrop-filter: blur(3px);
   overflow: hidden;
 }
 
 .drawer {
   z-index: 4;
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
+  left: 0;
   width: 60%;
   height: 100%;
   max-width: 300px;
@@ -38,17 +39,18 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 32px;
-  background-color: var(--medium-blue);
+  background-color: lightgray;
   padding: 32px;
   overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .overlay {
-    animation: fadeIn 500ms cubic-bezier(0.14, 0.78, 0.36, 1);
-  }
   .drawer {
     animation: slideIn 500ms cubic-bezier(0.14, 0.78, 0.36, 1);
+  }
+  .drawer.closed {
+    animation: slideOut 500ms cubic-bezier(0.14, 0.78, 0.36, 1);
+    left: -100%;
   }
 }
 
@@ -77,11 +79,13 @@
 }
 
 .triggerBtn {
+  z-index: 4;
   background-color: transparent;
   width: 40px;
   height: 40px;
   position: absolute;
-  left: 0;
+  left: 3%;
+  top: 3%;
   cursor: pointer;
   border-radius: 100vmax;
   display: flex;
@@ -92,8 +96,7 @@
 /* accessibility */
 .triggerBtn:hover,
 .triggerBtn:focus {
-  fill: orange;
-  stroke: orange;
+  border-color: orange;
 }
 
 .triggerBtn:hover > .menu,
@@ -109,10 +112,10 @@
   padding: 8px;
   cursor: pointer;
   border: none;
-  background: hsl(256deg 100% 90%);
+  background: hsl(39, 100%, 72%);
   font-weight: 500;
   font-size: 1.5rem;
-  color: var(--main-text);
+  color: black;
   border-radius: 12px;
   border: 2px solid transparent;
 }

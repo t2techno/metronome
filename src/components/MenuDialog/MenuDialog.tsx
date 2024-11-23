@@ -22,18 +22,17 @@ const MenuDialog: React.FC<PropsWithChildren<iMenuDialog>> = ({
           <Settings className={styles.menu} size={36} />
         </button>
       </BaseDialog.Trigger>
-      <BaseDialog.Portal>
-        <BaseDialog.Overlay className={styles.overlay} />
-        <BaseDialog.Content
-          className={`${styles.drawer} ${className && className}`}
-        >
-          <BaseDialog.Title className={styles.title}>Ms. Tess</BaseDialog.Title>
-          {children}
-          <BaseDialog.Close asChild>
-            <button className={styles.closeBtn}>Close</button>
-          </BaseDialog.Close>
-        </BaseDialog.Content>
-      </BaseDialog.Portal>
+      <BaseDialog.Content
+        className={`${styles.drawer} ${!isOpen && styles.closed} ${
+          className && className
+        }`}
+      >
+        <BaseDialog.Title className={styles.title}>Settings</BaseDialog.Title>
+        {children}
+        <BaseDialog.Close asChild>
+          <button className={styles.closeBtn}>Close</button>
+        </BaseDialog.Close>
+      </BaseDialog.Content>
     </BaseDialog.Root>
   );
 };

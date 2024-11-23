@@ -1,0 +1,18 @@
+.timSigSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeSigEdit {
+  display: flex;
+  justify-content: space-around;
+}
+
+.beatsPerMeasure {
+  width: fit-content;
+}
+
+.subdivisionSelect {
+  width: fit-content;
+}
