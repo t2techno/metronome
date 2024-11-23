@@ -45,8 +45,8 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
 
   return (
     <div className={styles.wrapper}>
+      <Settings />
       <div className={styles.topRow}>
-        <Settings />
         <div className={`caveat-600 ${styles.timeSigWrapper}`}>
           <TimeSignature
             beatsPerMeasure={beatsPerMeasure}
