@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Knob from "../../components/knob/Knob";
 import styles from "./metronome-page.module.css";
 import { Minus, Pause, Play, Plus } from "react-feather";
@@ -6,6 +6,7 @@ import useTimer from "../../hooks/useTimer";
 import TimeSignature from "../../components/TimeSignature";
 import Beat from "../../components/Beat";
 import Settings from "../../components/Settings";
+import { MetronomeContext } from "../../provider/MetronomeProvider";
 
 const MAX_BPM = 320;
 const MIN_BPM = 1;
@@ -15,9 +16,11 @@ type PlayFunction = ({ id }: { id: string }) => void;
 const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bpm, setBpm] = useState(60);
-  const [beatsPerMeasure, setBeatsPerMeasure] = useState(4);
-  const [subdivision, setSubdivision] = useState(4);
   const [activeBeat, setActiveBeat] = useState(0);
+  const { beatsPerMeasure: beatsPerMeasureStr, subdivision: subdivisionStr } =
+    useContext(MetronomeContext);
+  const beatsPerMeasure = Number.parseInt(beatsPerMeasureStr);
+  const subdivision = Number.parseInt(subdivisionStr);
 
   const playBeat = (elapsed: number) => {
     console.log(elapsed);
