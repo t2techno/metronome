@@ -1,3 +1,7 @@
+.wrapper {
+  font-size: 1.5rem;
+}
+
 .timSigSection {
   display: flex;
   flex-direction: column;
@@ -10,9 +14,14 @@
 }
 
 .beatsPerMeasure {
-  width: fit-content;
+  width: 60px;
+  border-radius: 4px;
+  padding-left: 8px;
+  line-height: 1;
+  height: 35px;
+  background-color: white;
+  color: darkgoldenrod;
 }
 
 .subdivisionSelect {
-  width: fit-content;
 }

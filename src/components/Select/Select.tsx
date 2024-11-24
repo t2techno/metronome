@@ -5,21 +5,28 @@ import styles from "./select.module.css";
 interface iSelectProps {
   label: string;
   options: Array<string>;
+  value: string;
+  onValueChange: (val: string) => void;
   triggerClassName?: string;
 }
 
 const Select: React.FC<iSelectProps> = ({
+  label,
+  value,
+  onValueChange,
   options,
   triggerClassName,
 }) => {
   return (
-    <SelectBase.Root>
+    <SelectBase.Root value={value} onValueChange={onValueChange}>
       <SelectBase.Trigger
         className={`${styles.trigger} ${triggerClassName && triggerClassName}`}
-        aria-label="Subdivisions"
+        aria-label={label}
       >
-        <SelectBase.Value placeholder="Subdivision" />
-        <SelectBase.Icon className="SelectIcon">
+        <SelectBase.Value asChild>
+          <p>{value}</p>
+        </SelectBase.Value>
+        <SelectBase.Icon>
           <ChevronDown />
         </SelectBase.Icon>
       </SelectBase.Trigger>
