@@ -17,10 +17,10 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bpm, setBpm] = useState(60);
   const [activeBeat, setActiveBeat] = useState(0);
-  const { beatsPerMeasure: beatsPerMeasureStr, subdivision: subdivisionStr } =
+  const { beatsPerMeasure: beatsPerMeasureStr, base: baseStr } =
     useContext(MetronomeContext);
   const beatsPerMeasure = Number.parseInt(beatsPerMeasureStr);
-  const subdivision = Number.parseInt(subdivisionStr);
+  const base = Number.parseInt(baseStr);
 
   const playBeat = (elapsed: number) => {
     console.log(elapsed);
@@ -53,7 +53,7 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
         <div className={`caveat-600 ${styles.timeSigWrapper}`}>
           <TimeSignature
             beatsPerMeasure={beatsPerMeasure}
-            subdivision={subdivision}
+            base={base}
           />
         </div>
       </div>

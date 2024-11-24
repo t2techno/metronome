@@ -6,7 +6,7 @@ export type GroupFields =
   | "end"
   | "tempo"
   | "beatsPerMeasure"
-  | "subdivision";
+  | "base";
 
 export interface iBeatGroup {
   key: number;
@@ -15,7 +15,7 @@ export interface iBeatGroup {
   end: number;
   tempo: number;
   beatsPerMeasure: number;
-  subdivision: number;
+  base: number;
 }
 
 const initGroup = {
@@ -25,7 +25,7 @@ const initGroup = {
   end: 2,
   tempo: 60,
   beatsPerMeasure: 4,
-  subdivision: 4,
+  base: 4,
 };
 
 interface iContextData {

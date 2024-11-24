@@ -34,7 +34,11 @@ const Select: React.FC<iSelectProps> = ({
         <SelectBase.Content position="popper" className={styles.SelectContent}>
           <SelectBase.Viewport className={styles.SelectViewport}>
             {options.map((option, idx) => (
-              <SelectBase.Item key={`option_${idx}`} value={option}>
+              <SelectBase.Item
+                key={`option_${idx}`}
+                className={styles.SelectItem}
+                value={option}
+              >
                 {option}
               </SelectBase.Item>
             ))}

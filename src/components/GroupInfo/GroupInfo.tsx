@@ -81,7 +81,7 @@ const GroupInfo = () => {
         <Field label="TimeSignature" onLongPress={() => handleClick("timeSig")}>
           <TimeSignature
             beatsPerMeasure={group.beatsPerMeasure}
-            subdivision={group.subdivision}
+            base={group.base}
           />
         </Field>
         <Field label="Tempo" onLongPress={() => handleClick("tempo")}>

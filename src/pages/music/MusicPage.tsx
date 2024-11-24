@@ -29,7 +29,7 @@ const MusicPage = () => {
         <>
           <TimeSignature
             beatsPerMeasure={beatGroups[currentGroup].beatsPerMeasure}
-            subdivision={beatGroups[currentGroup].subdivision}
+            base={beatGroups[currentGroup].base}
           />
           {currentMeasure}
           <div className={styles.beatRow}>{beats}</div>

@@ -2,17 +2,17 @@ import styles from "./time-signature.module.css";
 
 interface iTimeSigProps {
   beatsPerMeasure: number;
-  subdivision: number;
+  base: number;
 }
 
 const TimeSignature: React.FC<iTimeSigProps> = ({
   beatsPerMeasure,
-  subdivision,
+  base,
 }) => {
   return (
     <div className={styles.wrapper}>
       <p>
-        {beatsPerMeasure}/{subdivision}
+        {beatsPerMeasure}/{base}
       </p>
     </div>
   );

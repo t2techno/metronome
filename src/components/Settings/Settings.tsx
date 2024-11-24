@@ -7,13 +7,13 @@ import { MetronomeContext } from "../../provider/MetronomeProvider";
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { beatsPerMeasure, subdivision, updateState } =
+  const { beatsPerMeasure, base, updateState } =
     useContext(MetronomeContext);
   const handleOpenChange = () => {
     setIsOpen((s) => !s);
   };
-  const handleSubdivisionChange = (val: string) => {
-    updateState("subdivision", val);
+  const handleBaseChange = (val: string) => {
+    updateState("base", val);
   };
   const handleBeatsPerMeasureChange = (val: string) => {
     updateState("beatsPerMeasure", val);
@@ -38,10 +38,10 @@ const Settings = () => {
           />
           /
           <Select
-            label="subdivision"
-            value={subdivision}
-            onValueChange={handleSubdivisionChange}
-            triggerClassName={styles.subdivisionSelect}
+            label="base"
+            value={base}
+            onValueChange={handleBaseChange}
+            triggerClassName={styles.baseSelect}
             options={["1", "2", "4", "8", "16"]}
           />
         </div>
