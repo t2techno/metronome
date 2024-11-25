@@ -1,12 +1,19 @@
 import styles from "./beat.module.css";
 
 interface iBeatProps {
-  active?: boolean;
-  downBeat?: boolean;
+  active: boolean;
+  downBeat: boolean;
+  isFirst: boolean;
 }
 
-const Beat: React.FC<iBeatProps> = ({ active, downBeat = false }) => {
-  let size = downBeat ? 30 : 25;
+const Beat: React.FC<iBeatProps> = ({ active, downBeat, isFirst }) => {
+  let size = 15;
+  if (isFirst) {
+    size = 40;
+  } else if (downBeat) {
+    size = 30;
+  }
+
   if (active) {
     size += size * 0.25;
   }

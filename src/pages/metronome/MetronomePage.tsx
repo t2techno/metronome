@@ -17,18 +17,35 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bpm, setBpm] = useState(60);
   const [activeBeat, setActiveBeat] = useState(0);
-  const { beatsPerMeasure: beatsPerMeasureStr, base: baseStr } =
-    useContext(MetronomeContext);
-  const beatsPerMeasure = Number.parseInt(beatsPerMeasureStr);
+  const {
+    beatsPerMeasure: beatsPerMeasureStr,
+    base: baseStr,
+    subdiv: subdivStr,
+  } = useContext(MetronomeContext);
   const base = Number.parseInt(baseStr);
+  let subdiv: number;
+  switch (subdivStr) {
+    case "eighth":
+      subdiv = 2;
+      break;
+    case "triplet":
+      subdiv = 3;
+      break;
+    case "sixteenth":
+      subdiv = 4;
+      break;
+    default:
+      subdiv = 1;
+  }
 
+  const beatsPerMeasure = Number.parseInt(beatsPerMeasureStr);
   const playBeat = (elapsed: number) => {
     console.log(elapsed);
-    setActiveBeat(elapsed % beatsPerMeasure);
+    setActiveBeat(elapsed % (beatsPerMeasure * subdiv));
     playSound({ id: "full" });
   };
 
-  const msPerBeat = 1000 * (60 / bpm);
+  const msPerBeat = 1000 * (60 / (bpm * subdiv));
   const timer = useTimer(playBeat, msPerBeat, () => {
     console.log("oops, error");
   });
@@ -42,19 +59,23 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     setIsPlaying((state) => !state);
   };
 
-  const beats = new Array(beatsPerMeasure)
+  const beats = new Array(beatsPerMeasure * subdiv)
     .fill(0)
-    .map((_, idx) => <Beat key={idx} active={activeBeat === idx} />);
+    .map((_, idx) => (
+      <Beat
+        key={idx}
+        isFirst={idx === 0}
+        downBeat={idx % subdiv === 0}
+        active={activeBeat === idx}
+      />
+    ));
 
   return (
     <div className={styles.wrapper}>
       <Settings />
       <div className={styles.topRow}>
         <div className={`caveat-600 ${styles.timeSigWrapper}`}>
-          <TimeSignature
-            beatsPerMeasure={beatsPerMeasure}
-            base={base}
-          />
+          <TimeSignature beatsPerMeasure={beatsPerMeasure} base={base} />
         </div>
       </div>
       <div className={styles.beatRow}>{beats}</div>
