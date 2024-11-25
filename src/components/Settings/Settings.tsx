@@ -3,11 +3,12 @@ import MenuDialog from "../MenuDialog";
 import styles from "./settings.module.css";
 import Select from "../Select";
 import { MetronomeContext } from "../../provider/MetronomeProvider";
+import ToggleGroup from "../ToggleGroup";
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { beatsPerMeasure, base, updateState } =
+  const { beatsPerMeasure, base, subdiv, updateState } =
     useContext(MetronomeContext);
   const handleOpenChange = () => {
     setIsOpen((s) => !s);
@@ -24,7 +25,7 @@ const Settings = () => {
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
     >
-      <div className={`${styles.timSigSection}`}>
+      <div className={`${styles.settingSection}`}>
         <p>TimeSignature:</p>
         <hr />
         <div className={styles.timeSigEdit}>
@@ -43,6 +44,18 @@ const Settings = () => {
             onValueChange={handleBaseChange}
             triggerClassName={styles.baseSelect}
             options={["1", "2", "4", "8", "16"]}
+          />
+        </div>
+      </div>
+      <div className={`${styles.settingSection}`}>
+        <p>Subdivision:</p>
+        <hr />
+        <div className={styles.subdivSection}>
+          <ToggleGroup
+            className={styles.subdivToggleGroup}
+            options={["eighth", "triplet", "sixteenth"]}
+            value={subdiv}
+            onValueChange={(val) => updateState("subdiv", val)}
           />
         </div>
       </div>

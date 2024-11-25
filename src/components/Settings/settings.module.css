@@ -2,7 +2,7 @@
   font-size: 1.5rem;
 }
 
-.timSigSection {
+.settingSection {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -23,5 +23,11 @@
   color: darkgoldenrod;
 }
 
-.baseSelect {
+.subdivSection {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.subdivToggleGroup {
 }
