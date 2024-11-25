@@ -1,16 +1,20 @@
 import { createContext, PropsWithChildren, useState } from "react";
 
-type StateType = "beatsPerMeasure" | "base";
+export type SubdivType = "" | "eighth" | "triplet" | "sixteenth";
+
+type StateType = "beatsPerMeasure" | "base" | "subdiv";
 
 export interface iMetronomeState {
   beatsPerMeasure: string;
   base: string;
+  subdiv: SubdivType;
   updateState: (type: StateType, val: string) => void;
 }
 
 const initMetronomeState: iMetronomeState = {
   beatsPerMeasure: "4",
   base: "4",
+  subdiv: "",
   updateState: () => {},
 };
 
@@ -22,6 +26,7 @@ export const MetronomeProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [beatsPerMeasure, setBeatsPerMeasure] = useState("4");
   const [base, setBase] = useState("4");
+  const [subdiv, setSubdiv] = useState<SubdivType>("");
 
   const updateState = (type: StateType, value: string) => {
     switch (type) {
@@ -31,6 +36,9 @@ export const MetronomeProvider: React.FC<PropsWithChildren> = ({
       case "base":
         setBase(value);
         break;
+      case "subdiv":
+        setSubdiv(value as SubdivType);
+        break;
       default:
         console.log("Don't know that type.");
     }
@@ -39,6 +47,7 @@ export const MetronomeProvider: React.FC<PropsWithChildren> = ({
   const contextValue: iMetronomeState = {
     beatsPerMeasure,
     base,
+    subdiv,
     updateState,
   };
 
