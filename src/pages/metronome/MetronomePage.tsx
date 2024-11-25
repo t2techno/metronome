@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Knob from "../../components/knob/Knob";
 import styles from "./metronome-page.module.css";
 import { Minus, Pause, Play, Plus } from "react-feather";
@@ -12,6 +12,7 @@ const MAX_BPM = 320;
 const MIN_BPM = 1;
 
 type PlayFunction = ({ id }: { id: string }) => void;
+type BeatSize = "full" | "half" | "quarter";
 
 const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,6 +24,8 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     subdiv: subdivStr,
   } = useContext(MetronomeContext);
   const base = Number.parseInt(baseStr);
+  const beatsPerMeasure = Number.parseInt(beatsPerMeasureStr);
+
   let subdiv: number;
   switch (subdivStr) {
     case "eighth":
@@ -37,12 +40,41 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     default:
       subdiv = 1;
   }
+  const [beatSizes, setBeatSizes] = useState(
+    new Array(beatsPerMeasure * subdiv).fill(0).map((_, idx) => {
+      if (idx === 0) {
+        return "full";
+      } else if (idx % subdiv === 0) {
+        return "half";
+      }
+      return "quarter";
+    })
+  );
 
-  const beatsPerMeasure = Number.parseInt(beatsPerMeasureStr);
+  useEffect(() => {
+    setBeatSizes(
+      new Array(beatsPerMeasure * subdiv).fill(0).map((_, idx) => {
+        if (idx === 0) {
+          return "full";
+        } else if (idx % subdiv === 0) {
+          return "half";
+        }
+        return "quarter";
+      })
+    );
+  }, [subdivStr]);
+
   const playBeat = (elapsed: number) => {
     console.log(elapsed);
-    setActiveBeat(elapsed % (beatsPerMeasure * subdiv));
-    playSound({ id: "full" });
+    const activeBeat = elapsed % (beatsPerMeasure * subdiv);
+    setActiveBeat(activeBeat);
+
+    // hack to get latest state in a timer
+    setBeatSizes((s) => {
+      playSound({ id: s[activeBeat] });
+      return s;
+      beatSizes;
+    });
   };
 
   const msPerBeat = 1000 * (60 / (bpm * subdiv));
@@ -59,16 +91,14 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     setIsPlaying((state) => !state);
   };
 
-  const beats = new Array(beatsPerMeasure * subdiv)
-    .fill(0)
-    .map((_, idx) => (
-      <Beat
-        key={idx}
-        isFirst={idx === 0}
-        downBeat={idx % subdiv === 0}
-        active={activeBeat === idx}
-      />
-    ));
+  const beats = beatSizes.map((size, idx) => (
+    <Beat
+      key={idx}
+      isFirst={size === "full"}
+      downBeat={size === "half"}
+      active={activeBeat === idx}
+    />
+  ));
 
   return (
     <div className={styles.wrapper}>
