@@ -1,18 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import Knob from "../../components/knob/Knob";
 import styles from "./metronome-page.module.css";
 import { Minus, Pause, Play, Plus } from "react-feather";
-import useTimer from "../../hooks/useTimer";
 import TimeSignature from "../../components/TimeSignature";
 import Beat from "../../components/Beat";
 import Settings from "../../components/Settings";
 import { MetronomeContext } from "../../provider/MetronomeProvider";
+import { useMetronome } from "../../hooks/useMetronome";
 
 const MAX_BPM = 320;
 const MIN_BPM = 1;
 
 type PlayFunction = ({ id }: { id: string }) => void;
-type BeatSize = "full" | "half" | "quarter";
 
 const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -40,53 +39,35 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     default:
       subdiv = 1;
   }
-  const [beatSizes, setBeatSizes] = useState(
-    new Array(beatsPerMeasure * subdiv).fill(0).map((_, idx) => {
+  const beatSizes = useMemo(() => {
+    return new Array(beatsPerMeasure * subdiv).fill(0).map((_, idx) => {
       if (idx === 0) {
         return "full";
       } else if (idx % subdiv === 0) {
         return "half";
       }
       return "quarter";
-    })
-  );
+    });
+  }, [subdivStr, beatsPerMeasure]);
 
-  useEffect(() => {
-    setBeatSizes(
-      new Array(beatsPerMeasure * subdiv).fill(0).map((_, idx) => {
-        if (idx === 0) {
-          return "full";
-        } else if (idx % subdiv === 0) {
-          return "half";
-        }
-        return "quarter";
-      })
-    );
-  }, [subdivStr]);
-
-  const playBeat = (elapsed: number) => {
+  const playBeat = (elapsed: number, soundId: string) => {
     console.log(elapsed);
     const activeBeat = elapsed % (beatsPerMeasure * subdiv);
     setActiveBeat(activeBeat);
 
-    // hack to get latest state in a timer
-    setBeatSizes((s) => {
-      playSound({ id: s[activeBeat] });
-      return s;
-      beatSizes;
-    });
+    playSound({ id: soundId });
   };
 
   const msPerBeat = 1000 * (60 / (bpm * subdiv));
-  const timer = useTimer(playBeat, msPerBeat, () => {
-    console.log("oops, error");
+  const metronome = useMetronome(playBeat, beatSizes, msPerBeat, () => {
+    console.log("oops, metronome error");
   });
 
   const togglePlay = () => {
     if (isPlaying) {
-      timer.stop();
+      metronome.stop();
     } else {
-      timer.start();
+      metronome.start();
     }
     setIsPlaying((state) => !state);
   };
