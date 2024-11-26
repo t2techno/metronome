@@ -13,6 +13,37 @@ const MIN_BPM = 1;
 
 type PlayFunction = ({ id }: { id: string }) => void;
 
+const generateBeats = (
+  beatsPerMeasure: number,
+  subdiv: number,
+  activeBeat: number
+) => {
+  let beatNum = 0;
+  const beats = [];
+  for (let beat = 0; beat < beatsPerMeasure; beat++) {
+    const beatGroup = [];
+    for (let beatSub = 0; beatSub < subdiv; beatSub++) {
+      beatGroup.push(
+        <Beat
+          key={`beat_${beatNum}`}
+          isFirst={beatNum === 0}
+          downBeat={beatSub === 0}
+          active={activeBeat === beatNum}
+        />
+      );
+      beatNum += 1;
+    }
+    beats.push(beatGroup);
+  }
+  return beats.map((beatGroup, idx) => {
+    return (
+      <div key={`beatGroup_${idx}`} className={styles.beatGroup}>
+        {beatGroup}
+      </div>
+    );
+  });
+};
+
 const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bpm, setBpm] = useState(60);
@@ -50,6 +81,8 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     });
   }, [subdivStr, beatsPerMeasure]);
 
+  let beats = generateBeats(beatsPerMeasure, subdiv, activeBeat);
+
   const playBeat = (elapsed: number, soundId: string) => {
     console.log(elapsed);
     const activeBeat = elapsed % (beatsPerMeasure * subdiv);
@@ -71,15 +104,6 @@ const MetronomePage = ({ playSound }: { playSound: PlayFunction }) => {
     }
     setIsPlaying((state) => !state);
   };
-
-  const beats = beatSizes.map((size, idx) => (
-    <Beat
-      key={idx}
-      isFirst={size === "full"}
-      downBeat={size === "half"}
-      active={activeBeat === idx}
-    />
-  ));
 
   return (
     <div className={styles.wrapper}>
